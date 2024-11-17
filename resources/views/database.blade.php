@@ -1,7 +1,7 @@
 @extends('layouts.app', ['noCarousel' => true, 'headerColor' => '#6a0dad'])
 
 @section('content')
-<div class="container" style="margin-top: 150px">
+<div class="container" style="margin-top: 125pxpx">
     <h1 class="my-4">Youth Database</h1>
 
     <!-- Top Buttons and Search Form -->
@@ -70,17 +70,22 @@
                         <td class="text-nowrap" style="background-color: white;">{{ $youth->attended_kk_assembly ? 'Yes' : 'No' }}</td>
                         <td class="text-center text-nowrap sticky-top" style="background-color: white; right: 0;">
                             <!-- View, Edit, and Delete Buttons -->
-                            <button type="button" class="btn btn-info btn-sm" data-id="{{ $youth->id }}" onclick="fetchYouthDetails({{ $youth->id }})">
+                            <button type="button" class="btn btn-info btn-sm" onclick="window.location.href='{{ route('youths.show', $youth->id) }}'">
                                 View
                             </button>
-                            <button type="button" class="btn btn-warning btn-sm" onclick="editYouth({{ $youth->id }})">
+
+                            <!-- Edit Button -->
+                            <button type="button" class="btn btn-warning btn-sm" onclick="window.location.href='{{ route('youths.edit', $youth->id) }}'">
                                 Edit
                             </button>
+
+                            <!-- Delete Button -->
                             <form action="{{ route('youths.destroy', $youth->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
-                                <button type="submit" class="btn btn-danger">Delete</button>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="confirmDelete(this)">Delete</button>
                             </form>
+
                         </td>
                     </tr>
                 @endforeach
@@ -93,20 +98,21 @@
 
 @push('scripts')
 <script>
-    // Fetch Youth Details for the View Modal
-    function fetchYouthDetails(id) {
-        // Make an AJAX request to fetch the youth details and show the modal
-        $.ajax({
-            url: `/youths/${id}`,
-            type: 'GET',
-            success: function (response) {
-                // Populate modal with response data (e.g., name, email, etc.)
-                $('#viewModal').modal('show');
-            }
-        });
+    // Redirect to show.blade.php
+    function viewYouth(id) {
+        window.location.href = `/youths/${id}`;
     }
 
+    // Redirect to edit.blade.php
+    function editYouth(id) {
+        window.location.href = `/youths/${id}/edit`;
+    }
 
-
+    // Delete Confirmation
+    function confirmDelete(button) {
+        if (confirm('Are you sure you want to delete this record? This action cannot be undone.')) {
+            button.closest('form').submit();
+        }
+    }
 </script>
 @endpush

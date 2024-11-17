@@ -1,7 +1,7 @@
 @extends('layouts.app', ['noCarousel' => true, 'headerColor' => '#6a0dad'])
 
 @section('content')
-    <div class="card shadow-lg" style="border-radius: 15px; padding: 30px 50px; max-width: 1200px; margin: 0 auto; margin-top: 165px;">
+    <div class="card shadow-lg" style="border-radius: 15px; padding: 30px 50px; max-width: 1200px; margin: 0 auto; margin-top: 25px;">
         <!-- Return to Database Button -->
         <a href="{{ route('database') }}" class="btn btn-secondary mb-3" style="border-radius: 5px; margin-top: -40px;">
             Return to Database

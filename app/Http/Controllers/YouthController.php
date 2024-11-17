@@ -6,6 +6,9 @@ use App\Models\Youth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade as PDF; // Import domPDF
+
+
 
 class YouthController extends Controller
 {
@@ -157,9 +160,10 @@ class YouthController extends Controller
     // Display a specific youth profile (not implemented)
     public function show($id)
     {
-        $youth = Youth::findOrFail($id);
-        return response()->json($youth);
+        $youth = Youth::findOrFail($id); // Retrieve the youth record by ID
+        return view('show', compact('youth')); // Pass the record to the view
     }
+    
 
     // Show the form for editing a specific youth profile
     public function edit($id)
@@ -187,6 +191,20 @@ class YouthController extends Controller
         $youth->delete();                 // Delete the youth record
     
         return redirect()->route('youths.index')->with('success', 'Youth profile deleted successfully.');
-    }   
+    }  
+    
+    
+
+    public function exportReportPDF()
+    {
+        // Retrieve data for the report
+        $youths = Youth::all();
+    
+        // Generate PDF from a view
+        $pdf = PDF::loadView('youths.report_pdf', compact('youths'));
+    
+        // Return PDF for download
+        return $pdf->download('youth_report.pdf');
+    }
 }
 

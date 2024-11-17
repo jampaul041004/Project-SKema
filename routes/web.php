@@ -19,7 +19,6 @@ Route::get('/create', [YouthController::class, 'create'])->name('create');
 
 // Route to edit youth profile
 Route::get('/youths/{id}/edit', [YouthController::class, 'edit'])->name('youths.edit');
-
 // Route to update youth profile
 Route::put('/youths/{id}', [YouthController::class, 'update'])->name('youths.update');
 Route::get('/youths/{id}', [YouthController::class, 'show'])->name('youths.show');
@@ -27,6 +26,7 @@ Route::get('/youths/{id}', [YouthController::class, 'show']);
 Route::get('/youths/{id}/edit', [YouthController::class, 'edit']);
 Route::put('/youths/{id}', [YouthController::class, 'update']);
 
+Route::get('/youths/{id}', [YouthController::class, 'show'])->name('youths.show');
 
 
 Route::get('/youths/{id}', function($id) {
@@ -55,4 +55,5 @@ Route::get('/youths/{id}', function($id) {
 });
 
 
-
+Route::get('/report-pdf', [YouthController::class, 'exportReportPDF'])->name('youths.report.pdf');
+Route::get('/youths/report-pdf', [YouthController::class, 'exportReportPDF'])->name('youths.report_pdf');
